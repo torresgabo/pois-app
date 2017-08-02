@@ -1,18 +1,16 @@
 package ar.com.curso.poi.test;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.DataInputStream;
-import java.io.PrintStream;
 import java.net.URL;
 import java.net.URLConnection;
 
 import org.junit.Test;
 
 import ar.com.curso.poi.controladores.ControladorHome;
-import ar.com.curso.poi.tdd.PoiBean;
 
-public class ServicioTestATDD {
+public class AceptacionTest {
 	ControladorHome controlador = new ControladorHome();
 
 	@Test
