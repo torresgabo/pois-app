@@ -16,20 +16,15 @@ public class ServicioTestATDD {
 	ControladorHome controlador = new ControladorHome();
 
 	@Test
-	public void validaElPoiMasCercano() {
+	public void validaElPoiMasCercano() throws Exception {
 		// Obelisco
 		// lon -34.6037389
 		// lat -58.3837644
-		try {
-			String url = "http://localhost:8080/pois-app/Buenos_Aires_Turismo/retornapoicercano/-34.6037389/-58.3837644";
+		String url = "http://localhost:8080/pois-app/Buenos_Aires_Turismo/retornapoicercano/-34.6037389/-58.3837644";
 
-			String data = llamarUrl(url);
+		String data = llamarUrl(url);
 
-			assertThat(data).contains("Cuartetas");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		assertThat(data).contains("Cuartetas");
 	}
 
 	public String llamarUrl(String url) throws Exception {
