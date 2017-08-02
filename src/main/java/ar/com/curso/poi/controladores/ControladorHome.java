@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import ar.com.curso.poi.tdd.PoiBean;
 import ar.com.curso.poi.tdd.CalculadorDeDistancias;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -24,12 +25,12 @@ public class ControladorHome {
 	}
 	
 	@GET
-	@Path("/{servicio}/retoranpois")
+	@Path("/retoranpois")
 	public String retoranpois(@PathParam("servicio") String servicio){
 		Gson gson = new Gson();
 		
 		if (validaServicio(servicio)){
-			List<PoiBean> obj = PoiBean.filtraPois(servicio);
+			List<PoiBean> obj = new PoiBean().getPois();
 			String json = gson.toJson(obj); 
 			return json;
 		}else{
@@ -46,9 +47,9 @@ public class ControladorHome {
 	@Path("/{servicio}/retornapoicercano/{longitud}/{latitud}")
 	public String retornapoicercano(@PathParam("servicio") String servicio, @PathParam("longitud") String lon ,@PathParam("latitud") String lat){
 		
-		List<PoiBean> obj = new PoiBean().getPois();
+		List<PoiBean> obj = PoiBean.filtraPois(servicio);
 		Double  latitud = Double.parseDouble(lat);
-		Double longitud =Double.parseDouble(lon);;
+		Double longitud =Double.parseDouble(lon);
 		
 		for (int i=0; i<obj.size(); i++){
 			obj.get(i).setDistancia(CalculadorDeDistancias.distanciaCoord(latitud, longitud, Double.parseDouble(obj.get(i).getLatitud()), Double.parseDouble(obj.get(i).getLongitud())));
@@ -75,6 +76,41 @@ public class ControladorHome {
 			return gson.toJson(mensaje);
 		}
 	}
+	
+	
+	@GET
+	@Path("/{servicio}/poisDeUnRadio/{longitud}/{latitud}/{radio}")
+	public String poisDeUnRadio(@PathParam("servicio") String servicio, @PathParam("longitud") String lon ,@PathParam("latitud") String lat, @PathParam("radio") String rad){
+	
+		
+		List<PoiBean> obj = PoiBean.filtraPois(servicio);
+		Double  latitud = Double.parseDouble(lat);
+		Double longitud =Double.parseDouble(lon);
+		Integer radio =Integer.parseInt(rad);
+		List<PoiBean> poisSegunRadio = new ArrayList<PoiBean>();
+		
+		for (int i=0; i<obj.size(); i++){
+			obj.get(i).setDistancia(CalculadorDeDistancias.distanciaCoord(latitud, longitud, Double.parseDouble(obj.get(i).getLatitud()), Double.parseDouble(obj.get(i).getLongitud())));
+			if (obj.get(i).getDistancia()<=radio) 
+				poisSegunRadio.add(obj.get(i));
+		}
+				
+		
+		
+		Gson gson = new Gson();
+		
+		if (validaServicio(servicio)){
+			String json = gson.toJson(poisSegunRadio); 
+			return json;
+		}else{
+			Mensaje mensaje = new Mensaje();
+			mensaje.setStatus("BAD");
+			mensaje.setMensaje("Servicio no encontrado");
+			return gson.toJson(mensaje);
+		}
+		
+	}
+	
 	
 	
 	public boolean validaServicio(String servicio){

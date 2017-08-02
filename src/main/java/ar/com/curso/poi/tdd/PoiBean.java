@@ -82,8 +82,8 @@ public class PoiBean {
 		//		-34.6088526,-58.3759679 Cabildo de Buenos Aires
 
 		item.descripcion = "Pizzería 'Las Cuartetas'";
-		item.latitud = "-58.3795235";
-		item.longitud = "-34.6033254";
+		item.latitud = "-58.380621";
+		item.longitud = "-34.6036923";
 		item.nombre = "Pizzería 'Las Cuartetas'";
 		item.servicio = "Buenos_Aires_Turismo";
 
@@ -112,8 +112,8 @@ public class PoiBean {
 		item = new PoiBean();
 
 		item.descripcion = "Cabildo de Buenos Aires";
-		item.latitud = "-58.3759679";
-		item.longitud = "-34.6088526";
+		item.latitud = "-58.3759802";
+		item.longitud = "-34.6087392";
 		item.nombre = "Cabildo de Buenos Aires";
 		item.servicio = "Buenos_Aires_Turismo";
 
